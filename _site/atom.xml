@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Venelin Petkov</title>
+ <link href="http://localhost:4000/atom.xml" rel="self"/>
+ <link href="http://localhost:4000/"/>
+ <updated>2019-01-30T15:48:57+01:00</updated>
+ <id>http://localhost:4000</id>
+ <author>
+   <name>Venelin Petkov</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Blog Migration</title>
+   <link href="http://localhost:4000/2018/05/31/moved-blog-to-github/"/>
+   <updated>2018-05-31T13:50:11+02:00</updated>
+   <id>http://localhost:4000/2018/05/31/moved-blog-to-github</id>
+   <content type="html">&lt;h1 id=&quot;update-blog-migration-to-github&quot;&gt;Update: Blog Migration to Github&lt;/h1&gt;
+
+&lt;p&gt;For over a year now I have been running this blog on the &lt;a href=&quot;https://ghost.org/&quot;&gt;Ghost platform&lt;/a&gt; inside a cheap &lt;a href=&quot;https://www.digitalocean.com/&quot;&gt;Digital Ocean&lt;/a&gt; instance. I needed a server for
+some hobby projects, so it was not a big deal, I am not expecting big traffic here anyway. Recently I grew more ambitious (see &lt;a href=&quot;https://www.engineering-learning-machines.com/&quot;&gt;Engineering Learning Machines&lt;/a&gt;), therefore I don’t have much use for the Digital Ocean instance anymore, so it didn’t make sense to support it only for the blog. Fortunately, GitHub offers a free hosting solution called &lt;a href=&quot;https://pages.github.com/&quot;&gt;GitHub Pages&lt;/a&gt; (which I did use a couple of years back) that is free for lower-traffic sites like this one. This platform is based on &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, a static web page generator.&lt;/p&gt;
+
+&lt;p&gt;The migration was a breeze, mostly due to the &lt;a href=&quot;https://github.com/eloyesp/jekyll_ghost_importer&quot;&gt;Jekyll Ghost Importer&lt;/a&gt; plugin. The following post by &lt;a href=&quot;https://nikhita.github.io/build-blog-using-github-jekyll&quot;&gt;Nikhita Raghunath&lt;/a&gt; also
+offers some valuable tips on how to configure your Jekyll instance as a blog.&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How to install a Raspberry Camera Node on ROS Kinetic (Raspbian Stretch)</title>
+   <link href="http://localhost:4000/2017/11/19/how-to-install-a-raspberry-camera-node-on-ros-kinetic-raspbian-stretch/"/>
+   <updated>2017-11-19T13:16:54+01:00</updated>
+   <id>http://localhost:4000/2017/11/19/how-to-install-a-raspberry-camera-node-on-ros-kinetic-raspbian-stretch</id>
+   <content type="html">&lt;h1 id=&quot;raspicam-installation-tutorial&quot;&gt;Raspicam Installation Tutorial&lt;/h1&gt;
+
+&lt;p&gt;In order to use the Raspberry Pi 3 camera v2, we need to install a third-party ROS node from source, since it is not part of the ROS distribution at the moment. The installation is not that straightforward using only the barebones ROS installation, since there are a few dependencies on other packages. Looking at the package definition &lt;a href=&quot;https://github.com/UbiquityRobotics/raspicam_node/blob/indigo/package.xml&quot;&gt;package.xml&lt;/a&gt;, we see the following dependencies:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;catkin&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;compressed_image_transport&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;roscpp&lt;/li&gt;
+  &lt;li&gt;std_msgs&lt;/li&gt;
+  &lt;li&gt;std_srvs&lt;/li&gt;
+  &lt;li&gt;sensor_msgs&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;camera_info_manager&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;dynamic_reconfigure&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;libraspberrypi0&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The highlighted ones are missing from the &lt;code class=&quot;highlighter-rouge&quot;&gt;ros_comm&lt;/code&gt; stack, so we need to install them manually. The approach here is simply to fetch the missing packages and then merge them into the existing barebones catkin workspace. Lastly, we build and test &lt;code class=&quot;highlighter-rouge&quot;&gt;raspicam_node&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h6 id=&quot;1-install-all-dependencies&quot;&gt;1. Install all dependencies&lt;/h6&gt;
+
+&lt;p&gt;Fetch the package information for all the missing packages and their ROS dependencies:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rosinstall_generator compressed_image_transport --rosdistro kinetic --deps --wet-only --tar &amp;gt; kinetic-compressed_image_transport-wet.rosinstall
+
+rosinstall_generator camera_info_manager --rosdistro kinetic --deps --wet-only --tar &amp;gt; kinetic-camera_info_manager-wet.rosinstall
+
+rosinstall_generator dynamic_reconfigure --rosdistro kinetic --deps --wet-only --tar &amp;gt; kinetic-dynamic_reconfigure-wet.rosinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now we need to fetch the sources and put them to the &lt;code class=&quot;highlighter-rouge&quot;&gt;~/ros_catkin_ws/src&lt;/code&gt; where all the other packages from the barebone installation are located:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wstool merge -t src kinetic-compressed_image_transport-wet.rosinstall
+wstool merge -t src kinetic-camera_info_manager-wet.rosinstall
+wstool merge -t src kinetic-dynamic_reconfigure-wet.rosinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wstool update -t src
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Fetch any additional Raspbian libraries that are needed&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Build the packages. Please, note that this takes a very long time, so it might be a good idea to build it overnight in a tmux window.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./src/catkin/bin/catkin_make_isolated -j1 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;It turns out that &lt;code class=&quot;highlighter-rouge&quot;&gt;raspicam_node&lt;/code&gt; depends on the raspberry pi library, so we also install the headers:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install libraspberrypi-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h6 id=&quot;2-build-the-raspicam-node&quot;&gt;2. Build the raspicam node&lt;/h6&gt;
+&lt;p&gt;Check out the source code for &lt;code class=&quot;highlighter-rouge&quot;&gt;raspicam_node&lt;/code&gt; from Github in the workspace src directory:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/ros_catkin_ws
+git clone https://github.com/UbiquityRobotics/raspicam_node.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Install other library dependencies automatically:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Finally, build and install &lt;code class=&quot;highlighter-rouge&quot;&gt;raspicam_node&lt;/code&gt;. It should be possible to do this more specifically with &lt;code class=&quot;highlighter-rouge&quot;&gt;--pkg raspicam&lt;/code&gt; and save some time, but this hasn’t been tried yet. Two compilation processes &lt;code class=&quot;highlighter-rouge&quot;&gt;-j2&lt;/code&gt; are a safe option here:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./src/catkin/bin/catkin_make_isolated -j2 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h6 id=&quot;3-test-the-camera&quot;&gt;3. Test the camera&lt;/h6&gt;
+&lt;p&gt;Now that we have the camera node installed, we can test the Raspberry camera if we haven’t done that yet. It needs to be enabled with &lt;code class=&quot;highlighter-rouge&quot;&gt;raspi-config&lt;/code&gt; from the &lt;code class=&quot;highlighter-rouge&quot;&gt;interface&lt;/code&gt; menu:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo raspi-config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Take a test shot&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;raspistill -o test.jpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Everything is fine, so we can test the raspicam node.&lt;/p&gt;
+
+&lt;h6 id=&quot;4-test-raspicam_node&quot;&gt;4. Test raspicam_node&lt;/h6&gt;
+&lt;p&gt;Start a new tmux session and source the setup file in every relevant window&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;source /opt/ros/kinetic/setup.bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Open a new window for &lt;code class=&quot;highlighter-rouge&quot;&gt;roscore&lt;/code&gt; and start it there. Find the launch definitions in 
+&lt;code class=&quot;highlighter-rouge&quot;&gt;~/ros_catkin_ws/src/raspicam_node/launch/&lt;/code&gt; and go there:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/ros_catkin_ws/src/raspicam_node/launch/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Start &lt;code class=&quot;highlighter-rouge&quot;&gt;raspicam_node&lt;/code&gt; with the launch configuration of choice:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roslaunch camerav2_1280x960.launch
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;A simple topic check shows us that the node is active:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rseed42@raspi:~$ rostopic list
+/raspicam_node/camera_info
+/raspicam_node/image/compressed
+/raspicam_node/parameter_descriptions
+/raspicam_node/parameter_updates
+/rosout
+/rosout_agg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>How to Install ROS (Robot Operating System) On Raspberry Pi 3 with Raspbian Stretch</title>
+   <link href="http://localhost:4000/2017/11/19/how-to-install-ros-robot-operating-system-on-raspberry-pi-3-with-raspbian-stretch/"/>
+   <updated>2017-11-19T00:17:12+01:00</updated>
+   <id>http://localhost:4000/2017/11/19/how-to-install-ros-robot-operating-system-on-raspberry-pi-3-with-raspbian-stretch</id>
+   <content type="html">&lt;h1 id=&quot;installation-instructions&quot;&gt;Installation Instructions&lt;/h1&gt;
+&lt;p&gt;An easier way to install ROS on Raspberry Pi is to use the Linux Mate distribution for Raspberry. However, I am unwilling to use bloated software, so here we do it the hard way :).&lt;/p&gt;
+
+&lt;p&gt;This guide describes how to install a barebone kinetic ROS distribution. The installation of additional packages is described in follow-up posts.&lt;/p&gt;
+
+&lt;h4 id=&quot;preparation&quot;&gt;Preparation&lt;/h4&gt;
+&lt;p&gt;We need to install some catkin bootstrap packages first. In order to do this, we must add the ros software repository. It seems that Raspbian Stretch is missing the certificate management service by default, so we have to install it first:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install dirmngr
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now we can add the ROS repository to apt:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo sh -c 'echo &quot;deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main&quot; &amp;gt; /etc/apt/sources.list.d/ros-latest.list'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Add the public key:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Update apt:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Install the bootstrap dependencies:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This will pull some other package dependencies, for instance &lt;code class=&quot;highlighter-rouge&quot;&gt;build-essentials&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;installation&quot;&gt;Installation&lt;/h4&gt;
+&lt;h6 id=&quot;1-initialize-the-ros-package-system&quot;&gt;1. Initialize the ROS package system&lt;/h6&gt;
+&lt;p&gt;The first step is to initialize the &lt;em&gt;rosdep&lt;/em&gt; package manager. As per the documentation, &lt;strong&gt;do not use sudo&lt;/strong&gt; for &lt;code class=&quot;highlighter-rouge&quot;&gt;rosdep update&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo rosdep init
+rosdep update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h6 id=&quot;2-create-the-catkin-workspace&quot;&gt;2. Create the catkin workspace&lt;/h6&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir ~/ros_catkin_ws
+cd ~/ros_catkin_ws
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h6 id=&quot;3-build-a-list-of-packages-and-dependencies&quot;&gt;3. Build a list of packages and dependencies&lt;/h6&gt;
+&lt;p&gt;The command &lt;code class=&quot;highlighter-rouge&quot;&gt;rosinstall_generator&lt;/code&gt; is used to plan out the build process by generating a &lt;code class=&quot;highlighter-rouge&quot;&gt;*.rosinstall&lt;/code&gt; file. It resolves all dependencies for the specified package and writes them down in the &lt;code class=&quot;highlighter-rouge&quot;&gt;rosinstall&lt;/code&gt; file. That file is used by the &lt;code class=&quot;highlighter-rouge&quot;&gt;wstool&lt;/code&gt; to fetch the source code for all packages.&lt;/p&gt;
+
+&lt;p&gt;The very minimal installation is based on the &lt;code class=&quot;highlighter-rouge&quot;&gt;ros_comm&lt;/code&gt; package:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rosinstall_generator ros_comm --rosdistro kinetic --deps --wet-only --tar &amp;gt; kinetic-ros_comm-wet.rosinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Here &lt;code class=&quot;highlighter-rouge&quot;&gt;--wet-only&lt;/code&gt; describes that only catkin (the new build system) packages are to be fetched. If you don’t want to start with the very basic system, there are a few other options available:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;robot&lt;/li&gt;
+  &lt;li&gt;perception&lt;/li&gt;
+  &lt;li&gt;move-arm&lt;/li&gt;
+  &lt;li&gt;simulators&lt;/li&gt;
+  &lt;li&gt;viz&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;For more info check the documentation at the &lt;a href=&quot;http://ros.org/reps/rep-0131.html#variants&quot;&gt;ROS Wiki&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h6 id=&quot;4-fetch-the-packages&quot;&gt;4. Fetch the packages&lt;/h6&gt;
+
+&lt;p&gt;The command &lt;code class=&quot;highlighter-rouge&quot;&gt;wstool&lt;/code&gt; is used to obtain the source code automatically. It can download the packages in parallel, controlled by the &lt;code class=&quot;highlighter-rouge&quot;&gt;-j&lt;/code&gt; option. In this step, a higher parallelization (-j8) is fine:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wstool init -j8 src kinetic-ros_comm-wet.rosinstall
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If the &lt;code class=&quot;highlighter-rouge&quot;&gt;wstool init&lt;/code&gt; command fails or it gets interrupted, the download can be resumed as follows:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wstool update -j4 -t src
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;When finished, the source code for the required packages can be found in&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/ros_catkin_ws/src
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Even though we have downloaded the packages in &lt;code class=&quot;highlighter-rouge&quot;&gt;ros_comm&lt;/code&gt;, there might be external dependencies (libraries and tools) that are not yet installed on the Raspbian OS. In order to fetch them automatically, we invoke the following command:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;It installs everything via the apt package manager. The dependecies are resolved for all ROS source packages in the &lt;code class=&quot;highlighter-rouge&quot;&gt;--from-paths&lt;/code&gt; directory. Since the above command is recursive, we tell it via &lt;code class=&quot;highlighter-rouge&quot;&gt;--ignore-src&lt;/code&gt; not to install the packages already in the src directory. As we are not working in the ROS environment yet, we have to also specify the distribution name with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--rosdistro&lt;/code&gt; parameter.&lt;/p&gt;
+
+&lt;h6 id=&quot;5-build-the-ros-packages&quot;&gt;5. Build the ROS packages&lt;/h6&gt;
+&lt;p&gt;The command for building the packages has been fetched with wstool along with the source code and is located in the &lt;code class=&quot;highlighter-rouge&quot;&gt;src&lt;/code&gt; directory. The &lt;code class=&quot;highlighter-rouge&quot;&gt;catkin_make_isolated&lt;/code&gt; is used for a mix of catkin and cmake packages. If only catkin packages are to be built, the &lt;code class=&quot;highlighter-rouge&quot;&gt;catkin_make&lt;/code&gt; should be used instead (custom-built ROS packages).&lt;/p&gt;
+
+&lt;p&gt;The Raspberry 3 has limited memory. With the default parallel setting &lt;code class=&quot;highlighter-rouge&quot;&gt;-j4&lt;/code&gt;, it overflows and the build process fails. Empirically, &lt;code class=&quot;highlighter-rouge&quot;&gt;-j2&lt;/code&gt; is a good parameter.&lt;/p&gt;
+
+&lt;p&gt;Finally, the install location can be specified with the &lt;code class=&quot;highlighter-rouge&quot;&gt;--make-space&lt;/code&gt; parameter. In order to simplify the process, we can make the current user owner of the target directory where we want to install ROS:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo mkdir -p /opt/ros/kinetic
+sudo chown rseed42:rseed42 /opt/ros/kinetic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Start the build command:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;./src/catkin/bin/catkin_make_isolated -j2 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If there is a problem with the compilation (crash due to memory exhaustion), the command can be issued again and the packages that are already compiled will be skipped, so it continues from where it left off.&lt;/p&gt;
+
+&lt;h6 id=&quot;6-test-the-installation&quot;&gt;6. Test the installation&lt;/h6&gt;
+&lt;p&gt;ROS uses a few environment variables that have to be set up prior to using it. According to the build command above, we can find a setup script at:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;source /opt/ros/kinetic/setup.bash
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Check that the ROS environment variables are set:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
+ROS_ROOT=/opt/ros/kinetic/share/ros
+ROS_MASTER_URI=http://localhost:11311
+ROS_PACKAGE_PATH=/opt/ros/kinetic/share
+ROSLISP_PACKAGE_DIRECTORIES=
+ROS_DISTRO=kinetic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We need to start the ROS core process as follows:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roscore
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We can now check the default topics with:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;rseed42@raspi:~/ros_catkin_ws$ rostopic list
+/rosout
+/rosout_agg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Everything seems fine, this was the easy part!&lt;/p&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Installing Arduino on Raspberry Pi 3</title>
+   <link href="http://localhost:4000/2016/12/18/installing-arduino-on-raspberry-pi-3/"/>
+   <updated>2016-12-18T18:15:25+01:00</updated>
+   <id>http://localhost:4000/2016/12/18/installing-arduino-on-raspberry-pi-3</id>
+   <content type="html">&lt;h4 id=&quot;overview&quot;&gt;Overview&lt;/h4&gt;
+&lt;p&gt;This guide will show how to install the latest Arduino IDE and supporting packages to enable the programming of Arduino devices from the Raspberry Pi 3.&lt;/p&gt;
+
+&lt;p&gt;You will need a USB to Serial FTDI converter in order to program the Arduino devices and to receive the output of the serial console when testing them.&lt;/p&gt;
+
+&lt;p&gt;The complete setup allows us to develop and program Arduino devices on the command line, without any IDE. We are going to use up-to-date versions of the software, so most of the packages will have to be fetched from Github and installed locally.&lt;/p&gt;
+
+&lt;h4 id=&quot;preliminary-steps&quot;&gt;Preliminary Steps&lt;/h4&gt;
+
+&lt;p&gt;First, let’s organize the locally installed packages on the Raspberry. I like to use a directory called “local” for this purpose. Since there are no other users, it makes no sense to install anything in system directories. We will place them in ~/local:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir ~/local
+cd local
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;arduino-ide&quot;&gt;Arduino IDE&lt;/h4&gt;
+
+&lt;p&gt;Because of some compatibility issues, I prefer to install an up-to-date version of the Arduino IDE. The official Debian package is just too old and not compatible anymore with newer libraries.&lt;/p&gt;
+
+&lt;p&gt;Download to the website https://www.arduino.cc/en/Main/Software. Make sure that you select the Linux ARM (experimental) version. The AMD64 architecture doesn’t work on the Raspberry. The current version is&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ARDUINO 1.6.13
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Download the package and move it to the Raspberry with something like:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;scp arduino-1.6.13-linuxarm.tar.xz raspi:local
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The package can be decompressed inside the ~/local directory using:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/local
+tar -xf arduino-1.6.13-linuxarm.tar.xz
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now we have the Arduino IDE installed under&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;~/local/arduino-1.6.13
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;It contains libraries, board description files, etc.&lt;/p&gt;
+
+&lt;p&gt;We can not compile the source files (Arduino sketches) with a plain old Make file, because there are many dependencies and hidden parts from the developer. Therefore, we need Arduino.mk which enables us to work on the command line. It lives on Github, so we just need to clone it to the ~/local directory:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:~$ git clone https://github.com/sudar/Arduino-Makefile ~/local/arduino_mk
+Cloning into '/home/vpetkov/local/arduino_mk'...
+remote: Counting objects: 2483, done.
+remote: Total 2483 (delta 0), reused 0 (delta 0), pack-reused 2483
+Receiving objects: 100% (2483/2483), 1.48 MiB | 522.00 KiB/s, done.
+Resolving deltas: 100% (1097/1097), done.
+Checking connectivity... done.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now we are set up to make a first test.&lt;/p&gt;
+
+&lt;h4 id=&quot;test-arduino-installation&quot;&gt;Test Arduino Installation&lt;/h4&gt;
+&lt;p&gt;First, create a directory that contains the code:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mkdir ~/test
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We need a Makefile and an *.ino file. Let’s create these:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd ~/test
+touch Makefile
+touch Test.ino
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now, please keep in mind that the programming test requires the following devices:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A USB to Serial FTDI adapter&lt;/li&gt;
+  &lt;li&gt;Arduino Pro Mini 3.3v&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;The Makefile is tailored for this particular device. If you have another, the hardware-specific parts have to be updated.&lt;/p&gt;
+
+&lt;p&gt;Makefile:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;BOARD_TAG=pro328
+MCU=atmega328
+MONITOR_PORT=/dev/ttyUSB0
+ARDUINO_DIR = /home/$(shell whoami)/local/arduino-1.6.13
+ARDMK_DIR = /home/$(shell whoami)/local/arduino_mk
+USER_LIB_PATH=/home/$(shell whoami)/local/lib
+BOARD_TAG = pro
+BOARD_SUB = ATmega328
+MCU = atmega328p
+F_CPU=8000000L
+AVRDUDE_ARD_BAUDRATE = 57600
+include $(ARDMK_DIR)/Arduino.mk
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The source code is also very simple:&lt;/p&gt;
+
+&lt;p&gt;Test.ino:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;void setup(){
+  Serial.begin(9600);
+  Serial.println(&quot;Arduino on Raspberry Pi Test&quot;);
+}
+void loop(){
+  delay(2000);
+  Serial.println(&quot;Still there&quot;);
+  Serial.print(&quot;\n&quot;);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Simply compile with “make”. All tools are contained in the Arduino IDE and all configuration in the Makefile:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The program should now be compiled successfully.&lt;/p&gt;
+
+&lt;p&gt;When you connect the FTDI converter, make sure that it appears as /tty/USB0. This can be checked with dmesg:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:~/test$ dmesg | tail
+[ 8864.644767] usb 1-1.4: Product: CP2102 USB to UART Bridge Controller
+[ 8864.644780] usb 1-1.4: Manufacturer: Silicon Labs
+[ 8864.644792] usb 1-1.4: SerialNumber: 0001
+[ 8865.808457] usbcore: registered new interface driver usbserial
+[ 8865.808562] usbcore: registered new interface driver usbserial_generic
+[ 8865.808649] usbserial: USB Serial support registered for generic
+[ 8865.812262] usbcore: registered new interface driver cp210x
+[ 8865.812395] usbserial: USB Serial support registered for cp210x
+[ 8865.812559] cp210x 1-1.4:1.0: cp210x converter detected
+[ 8865.813036] usb 1-1.4: cp210x converter now attached to ttyUSB0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We can now program the Arduino. Make sure that you have correctly connected the RX/TX and the reset pins, as well as the Vcc/Ground. You need the 100nF capacitor on the reset line, for it to work correctly.&lt;/p&gt;
+
+&lt;p&gt;Please, also make sure that the Python python-serial package is installed, since it is used by Arduino.mk:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;make upload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If sucessful, you should see something like:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/home/vpetkov/local/arduino-1.6.13/hardware/tools/avr/bin/avrdude -q -V -p atmega328p -C /home/vpetkov/local/arduino-1.6.13/hardware/tools/avr/etc/avrdude.conf -D -c arduino -b 57600 -P /dev/ttyUSB0 \
+		-U flash:w:build-pro-ATmega328/test.hex:i
+
+avrdude: AVR device initialized and ready to accept instructions
+avrdude: Device signature = 0x1e950f (probably m328p)
+avrdude: reading input file &quot;build-pro-ATmega328/test.hex&quot;
+avrdude: writing flash (1668 bytes):
+avrdude: 1668 bytes of flash written
+
+avrdude: safemode: Fuses OK (E:00, H:00, L:00)
+
+avrdude done.  Thank you.
+
+make[1]: Leaving directory '/home/vpetkov/test'
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we can test the message that the Arduino sends to us. I like to use a python command to monitor the serial port:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python -m serial.tools.miniterm -p /dev/ttyUSB0 -b 9600
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You should see period messages like:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Still there
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Press Ctrl and ] to exit.&lt;/p&gt;
+
+&lt;h4 id=&quot;user-libraries&quot;&gt;User Libraries&lt;/h4&gt;
+
+&lt;p&gt;You might have noticed the line&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;USER_LIB_PATH=/home/$(shell whoami)/local/lib
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This is where I put my user libraries. For instance, my temperature/humidity sensor uses the DHT library:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/adafruit/DHT-sensor-library ~/local/lib/DHT
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Also, I use MySensors for the wireless network:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git clone https://github.com/mysensors/MySensors ~/local/mysensors
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Raspberry Pi 3 Software Install</title>
+   <link href="http://localhost:4000/2016/12/18/raspberry-pi-3-software-install/"/>
+   <updated>2016-12-18T17:18:43+01:00</updated>
+   <id>http://localhost:4000/2016/12/18/raspberry-pi-3-software-install</id>
+   <content type="html">&lt;h4 id=&quot;preliminary-configuration&quot;&gt;Preliminary Configuration&lt;/h4&gt;
+
+&lt;p&gt;First, let’s update the system:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:~$ sudo apt-get update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;and upgrade any available packages&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:~$ sudo apt-get upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h4 id=&quot;useful-software-packages&quot;&gt;Useful Software Packages&lt;/h4&gt;
+&lt;p&gt;First, let’s install a familiar text editor. This goes a little bit against the minimalist concept, but since I am also using the Raspberry for development, it is actually useful to have something like that here. You are free to choose your tools, of course.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install emacs
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;A mandatory package is Git&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install -y git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you plan to program Arduino from the Raspberry Pi on the command line, then one very useful tool is the Python serial library.&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install -y python-serial
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;I like to use a terminal multiplexer to run long-running processes that I haven’t daemonized yet:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install -y tmux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;A useful resource monitoring tool is a modern version of top:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install htop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;One of the most important commands is gpio utility of the wiringpi library. It can be used directly to turn on/off gpio pins and also to show their state.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo apt-get install wiringpi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Example test command&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:~$ gpio readall
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
+ |   2 |   8 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5V      |     |     |
+ |   3 |   9 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |     |
+ |   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 0 | IN   | TxD     | 15  | 14  |
+ |     |     |      0v |      |   |  9 || 10 | 1 | IN   | RxD     | 16  | 15  |
+ |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
+ |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
+ |  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
+ |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
+ |  10 |  12 |    MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
+ |   9 |  13 |    MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
+ |  11 |  14 |    SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
+ |     |     |      0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
+ |   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
+ |   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
+ |   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
+ |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
+ |  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
+ |  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
+ |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;enable-some-kernel-features&quot;&gt;Enable Some Kernel Features&lt;/h4&gt;
+
+&lt;p&gt;If you want to connect some devices directly to the Raspberry, you might need to use a couple of additional features, so you can optionally enable them with the&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo raspi-config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;tool.&lt;/p&gt;
+
+&lt;p&gt;More specifically, these are interfaces that allow you to program microcontrollers and connect some devices over i2c:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enable SPI interface&lt;/li&gt;
+  &lt;li&gt;Enable i2c interface&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Configuration of a Clean Raspberrry Pi 3 Installation</title>
+   <link href="http://localhost:4000/2016/12/18/configuration-of-a-clean-raspberrry-pi-3-installation-2/"/>
+   <updated>2016-12-18T16:21:07+01:00</updated>
+   <id>http://localhost:4000/2016/12/18/configuration-of-a-clean-raspberrry-pi-3-installation-2</id>
+   <content type="html">&lt;h4 id=&quot;booting-up&quot;&gt;Booting Up&lt;/h4&gt;
+
+&lt;p&gt;We can now install the SD card and make some additional configurations to allows us to start using the Raspberry. I am assuming that it will be connected via LAN. This is always the safest option. Wifi can be setup later.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;The SD card is put faced down in the Raspberry. There should be only one way to do that.&lt;/li&gt;
+  &lt;li&gt;Power up the Raspberry.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You should see the green LED blinking. If only the read one is on, then there might be some problem with the image on the SD card. It is also a good idea to check on the LAN port to see that the TX/RX lights are also active.&lt;/p&gt;
+
+&lt;h4 id=&quot;connecting-to-the-raspberry&quot;&gt;Connecting to the Raspberry&lt;/h4&gt;
+&lt;p&gt;In your home router, look for some menu like&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;DHCP Client Devices
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;In my case, the entry looks like this:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;raspberrypi	B8:27:EB:42:C4:23	192.168.0.100	Ethernet(100Mbps)	N/A	*** STATIC IP ADDRESS **
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you have configured a static IP, this check might not be necessary, but I find it useful anyway. We can also ping it to check the the connectivity is OK:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ping -c4 192.168.0.100
+PING 192.168.0.100 (192.168.0.100) 56(84) bytes of data.
+64 bytes from 192.168.0.100: icmp_seq=1 ttl=64 time=4.12 ms
+64 bytes from 192.168.0.100: icmp_seq=2 ttl=64 time=1.15 ms
+64 bytes from 192.168.0.100: icmp_seq=3 ttl=64 time=1.34 ms
+64 bytes from 192.168.0.100: icmp_seq=4 ttl=64 time=1.07 ms
+
+--- 192.168.0.100 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 1.075/1.924/4.120/1.271 ms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;With the last check we can see if the SSH port is available:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ telnet 192.168.0.100 22
+Trying 192.168.0.100...
+Connected to 192.168.0.100.
+Escape character is '^]'.
+SSH-2.0-OpenSSH_6.7p1 Raspbian-5+deb8u3
+^]
+Protocol mismatch.
+Connection closed by foreign host.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We can now connect to the Raspberry. Raspbian is shipped with a default sudo-enabled user called “pi”:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Default Raspbian user: &lt;em&gt;pi&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Default Raspbian user password: &lt;em&gt;raspbian&lt;/em&gt; (&lt;em&gt;raspberry&lt;/em&gt; for Stretch)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Let’s connect with that user and change the credentials:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh pi@192.168.0.100
+The authenticity of host '192.168.0.100 (192.168.0.100)' can't be established.
+ECDSA key fingerprint is bb:61:88:d9:2c:58:a5:57:10:3f:f8:ce:46:cc:0b:98.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.0.100' (ECDSA) to the list of known hosts.
+pi@192.168.0.100's password: 
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+
+SSH is enabled and the default password for the 'pi' user has not been changed.
+This is a security risk - please login as the 'pi' user and type 'passwd' to set a new password.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Since pi has sudo rights, we need to immediately change this password.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ passwd
+Changing password for pi.
+(current) UNIX password: 
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;changing-the-host-name&quot;&gt;Changing the Host Name&lt;/h4&gt;
+&lt;p&gt;Shorter names are always better for frequent tasks, therefore I like to name my Raspberry “raspi”. However, be careful with these steps or you might lose connectivity and you might need to start all over again.&lt;/p&gt;
+
+&lt;p&gt;First, check the name of the system:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ hostname
+raspberrypi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Let’s change that:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ sudo hostname -b raspi
+pi@raspberrypi:~ $ hostname
+raspi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This is not the end of it, however. The original name is still contained in several configuration files. We can easily find them with a recursive grep:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ sudo grep -lr &quot;raspberrypi&quot; /etc/*
+sudo: unable to resolve host raspi
+/etc/apt/sources.list.d/raspi.list
+/etc/hostname
+/etc/hosts
+/etc/ssh/ssh_host_dsa_key.pub
+/etc/ssh/ssh_host_key
+/etc/ssh/ssh_host_ed25519_key.pub
+/etc/ssh/ssh_host_key.pub
+/etc/ssh/ssh_host_rsa_key.pub
+/etc/ssh/ssh_host_ecdsa_key.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Particularly worrisome are some SSH configuration files. If we blindly go about it, SSH will not work and we are locked out. First, however, we need to change the network name. Replace the original name in /etc/hosts with “raspi” and reboot the system:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nano /etc/hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Reboot:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can see that the network host name is now changed if you try to ping it from within the system:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ ping -c2 raspi
+PING raspi (127.0.1.1) 56(84) bytes of data.
+64 bytes from raspi (127.0.1.1): icmp_seq=1 ttl=64 time=0.109 ms
+64 bytes from raspi (127.0.1.1): icmp_seq=2 ttl=64 time=0.057 ms
+
+--- raspi ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 999ms
+rtt min/avg/max/mdev = 0.057/0.083/0.109/0.026 ms
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Despite the change of the network host name, you will notice that the Linux host name is still the old one. Change it in the hostname file:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nano /etc/hostname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now we need to perform a delicate change on SSH. Please, make sure that you don’t disconnect from SSH until this is done.&lt;/p&gt;
+
+&lt;p&gt;We have seen that many SSH certificates are tied to the original name of the system. We need to delete and regenerate these.&lt;/p&gt;
+
+&lt;p&gt;Remove the old SSH certificates:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspi:~ $ sudo rm /etc/ssh/ssh_host_*
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Immediately reconfigure the SSH server to regenerate the certificates:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspi:~ $ sudo dpkg-reconfigure openssh-server
+Creating SSH2 RSA key; this may take some time ...
+2048 6a:3a:d8:1d:c7:51:61:ca:a4:f5:bc:f0:9b:b0:fd:73 /etc/ssh/ssh_host_rsa_key.pub (RSA)
+Creating SSH2 DSA key; this may take some time ...
+1024 82:7a:cb:1d:65:63:5b:96:64:b8:83:be:a5:42:b8:b1 /etc/ssh/ssh_host_dsa_key.pub (DSA)
+Creating SSH2 ECDSA key; this may take some time ...
+256 b8:04:9d:e0:6e:52:cc:d2:f4:52:c9:ad:76:5a:e4:35 /etc/ssh/ssh_host_ecdsa_key.pub (ECDSA)
+Creating SSH2 ED25519 key; this may take some time ...
+256 e1:2f:19:b7:b2:d8:14:87:63:b9:e1:26:5c:97:58:03 /etc/ssh/ssh_host_ed25519_key.pub (ED25519)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Restart SSH:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspi:~ $ sudo service ssh restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;reboot the system:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspi:~ $ sudo reboot
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you try to connect now, you will notice that there is an error recognizing the SSH fingerprint. I usually fix this by removing the last entry in the known_hosts of my laptop’s SSH directory:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ emacs ~/.ssh/known_hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;After connecting&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh pi@192.168.0.100
+The authenticity of host '192.168.0.100 (192.168.0.100)' can't be established.
+ECDSA key fingerprint is 73:b4:f5:c4:7a:c7:65:83:5b:6e:b4:3d:02:d4:78:f3.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.0.100' (ECDSA) to the list of known hosts.
+pi@192.168.0.100's password: 
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sun Dec 18 15:12:17 2016 from 192.168.0.29
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;you will notice that the system is now properly named:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspi:~ $ hostname
+raspi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This should do it.&lt;/p&gt;
+
+&lt;h4 id=&quot;adding-a-custom-user&quot;&gt;Adding a Custom User&lt;/h4&gt;
+&lt;p&gt;The first thing I like to do on the new system is to add my own user&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ sudo useradd -G sudo vpetkov
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Set the password for the new user&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ sudo passwd vpetkov
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can see that user “pi” is added by default to many additional group that enable access to some hardware features:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ id
+uid=1000(pi) gid=1000(pi) groups=1000(pi),4(adm),20(dialout),24(cdrom),27(sudo),29(audio),44(video),46(plugdev),60(games),100(users),101(input),108(netdev),997(gpio),998(i2c),999(spi)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Let’s add the newly created user to these groups&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo usermod -a -G adm vpetkov
+sudo usermod -a -G dialout vpetkov
+sudo usermod -a -G audio vpetkov
+sudo usermod -a -G video vpetkov
+sudo usermod -a -G plugdev vpetkov
+sudo usermod -a -G input vpetkov
+sudo usermod -a -G netdev vpetkov
+sudo usermod -a -G gpio vpetkov
+sudo usermod -a -G i2c vpetkov
+sudo usermod -a -G spi vpetkov
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We should have more or less set up our custom user by now.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@raspberrypi:~ $ sudo su vpetkov
+vpetkov@raspberrypi:/home/pi$ id
+uid=1001(vpetkov) gid=1001(vpetkov) groups=1001(vpetkov),4(adm),20(dialout),27(sudo),29(audio),44(video),46(plugdev),101(input),108(netdev),997(gpio),998(i2c),999(spi)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We can not reconnect with the user we want to use:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh vpetkov@192.168.0.100
+vpetkov@192.168.0.100's password: 
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Could not chdir to home directory /home/vpetkov: No such file or directory
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Notice that the home directory is missing. Let’s rectify that:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:/$ sudo mkdir /home/vpetkov
+
+We trust you have received the usual lecture from the local System
+Administrator. It usually boils down to these three things:
+
+    #1) Respect the privacy of others.
+    #2) Think before you type.
+    #3) With great power comes great responsibility.
+
+[sudo] password for vpetkov: 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Change ownership:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vpetkov@raspi:/$ sudo chown vpetkov:vpetkov /home/vpetkov
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;When we reconnect, our current working directory is now the proper use home directory.&lt;/p&gt;
+
+&lt;h4 id=&quot;simplifying-ssh-access&quot;&gt;Simplifying SSH Access&lt;/h4&gt;
+&lt;p&gt;Before we start using the Raspberry system regularly, let’s make that as easy as possible. First, we need to modify our SSH client config, so we don’t need to type the full IP address all the time (alternatively, this can also be done with a DHCP configuration for the name of the raspberry if your router allows it).&lt;/p&gt;
+
+&lt;p&gt;If don’t have an SSH client configuration file, create one in your SSH directory:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ touch ~/.ssh/config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Inside it we only need to specify an alias for the IP and which user we want to login as:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nano ~/.ssh/config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;My file contains this example configuration, based on the tutorial:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Host raspi
+    HostName 192.168.0.100
+    User vpetkov
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now it is sufficient to type&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh raspi
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;to connect to the Raspberry.&lt;/p&gt;
+
+&lt;h4 id=&quot;setting-up-ssh-keys&quot;&gt;Setting up SSH Keys&lt;/h4&gt;
+&lt;p&gt;Using a password to connect to remote systems is not only more cumbersome, but also more risky, compared to using SSH keys. Let’s set up the keys.&lt;/p&gt;
+
+&lt;p&gt;First, generate the SSH key with:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/venelin/.ssh/id_rsa): /home/venelin/.ssh/id_rsa_raspi3
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/venelin/.ssh/id_rsa_raspi3.
+Your public key has been saved in /home/venelin/.ssh/id_rsa_raspi3.pub.
+The key fingerprint is:
+ca:ae:42:45:34:0a:7d:fb:3c:c0:ff:f3:c2:13:a3:bc venelin@clevo
+The key's randomart image is:
++---[RSA 2048]----+
+|.. .o            |
+| ...o.           |
+|  .+ .           |
+|    =            |
+|   . =  S        |
+|  .  .=.o        |
+| .   .o= o       |
+|  .  .o *        |
+|   ...E. =.      |
++-----------------+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Notice that several files are created in your ~/.ssh directory:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~/.ssh $ ls -l
+total 32
+-rw-r--r-- 1 venelin venelin   55 Dec 18 16:42 config
+...
+-rw------- 1 venelin venelin 1766 Dec 18 16:46 id_rsa_raspi3
+-rw-r--r-- 1 venelin venelin  395 Dec 18 16:46 id_rsa_raspi3.pub
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We need to copy the public key id_rsa_raspi3.pub to the Raspberry account. Fortunately, there is an easy command to do that and we don’t even need to worry about chmod-ing the authorized_keys file anymore:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh-copy-id raspi
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 3 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+vpetkov@192.168.0.100's password: 
+
+Number of key(s) added: 3
+
+Now try logging into the machine, with:   &quot;ssh 'raspi'&quot;
+and check to make sure that only the key(s) you wanted were added.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Notice that all public keys are copied over. If you need a more targeted approach, remove the rest or copy the file manually.&lt;/p&gt;
+
+&lt;p&gt;Now connecting to the Raspberry is as easy as typing&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ ssh raspi
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sun Dec 18 15:51:37 2016 from 192.168.0.29
+vpetkov@raspi:~$ 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Raspberry Pi 3 OS Installation</title>
+   <link href="http://localhost:4000/2016/12/18/raspberry-pi-3-os-installation/"/>
+   <updated>2016-12-18T16:20:36+01:00</updated>
+   <id>http://localhost:4000/2016/12/18/raspberry-pi-3-os-installation</id>
+   <content type="html">&lt;h4 id=&quot;overview&quot;&gt;Overview&lt;/h4&gt;
+&lt;p&gt;Raspberry Pi 3 doesn’t have a built-in hard disk drive, it uses a micro-SD card instead. This card is usually not sold together with the Raspberry, so it has to be bought and installed separately, unless you have a kit that provides that already.&lt;/p&gt;
+
+&lt;p&gt;I would recommend to buy an SD card with at least 8 GB of memory. Due to the low price point I am using a 32 GB card.&lt;/p&gt;
+
+&lt;p&gt;I decided to go with Raspbian Lite because I’d like to have a minimal system for my sensor network controller. Since it is not going to have a monitor attached to it, most of the software bloat in alternative distributions is useless here. However, this means that the only (comfortable) way to access the device is via SSH. SSH is disabled by default in the latest version (2016-11-25), which means that some configuration tweaks will be necessary before booting up with the SD card.&lt;/p&gt;
+
+&lt;h4 id=&quot;installing-the-image-on-the-sd-card&quot;&gt;Installing the image on the SD Card&lt;/h4&gt;
+&lt;p&gt;First, we need to find the device name of the SD Card. The fdisk command shows us detailed information about disk drives and partitions:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ sudo fdisk -l
+
+Disk /dev/sda: 232.9 GiB, 250059350016 bytes, 488397168 sectors
+...
+Disk /dev/mmcblk0: 29.7 GiB, 31914983424 bytes, 62333952 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xe47ffcac
+
+Device         Boot Start      End  Sectors  Size Id Type
+/dev/mmcblk0p1       2048 62332927 62330880 29.7G  b W95 FAT32
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can see that the device name of the SD card is /dev/mmcblk0 and it has one partition /dev/mmcblk0p1. We will copy the disk image directly to the disk drive /dev/mmcblk0.&lt;/p&gt;
+
+&lt;p&gt;First we need to unmount the existing partition if it is mounted:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ sudo umount /dev/mmcblk0p1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now we can byte-copy the image with the dd command:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~/Downloads $ sudo dd bs=4M if=2016-11-25-raspbian-jessie-lite.img of=/dev/mmcblk0
+331+1 records in
+331+1 records out
+1390411776 bytes (1.4 GB) copied, 57.5949 s, 24.1 MB/s
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Let’s also flush any unwritten data to prepare the SD card for removal:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo sync
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;We can check what the disk image now contains:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~/Downloads $ sudo fdisk -l
+
+Disk /dev/sda: 232.9 GiB, 250059350016 bytes, 488397168 sectors
+...
+
+Disk /dev/mmcblk0: 29.7 GiB, 31914983424 bytes, 62333952 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x244b8248
+
+Device         Boot  Start     End Sectors  Size Id Type
+/dev/mmcblk0p1        8192  137215  129024   63M  c W95 FAT32 (LBA)
+/dev/mmcblk0p2      137216 2715647 2578432  1.2G 83 Linux
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The Raspbian image contains two partitions:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A FAT32 boot partition&lt;/li&gt;
+  &lt;li&gt;The ext4 root partition of the OS&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;We need to modify some configuration files before we move the SD Card to the Raspberry device. For clarity I created manually the local directories where they could be mounted:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~/Downloads $ sudo mkdir -p /media/venelin/raspi/boot
+venelin@clevo ~/Downloads $ sudo mkdir -p /media/venelin/raspi/root
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Then mounted them with:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~/Downloads $ sudo mount /dev/mmcblk0p1 -t vfat -o uid=venelin /media/venelin/raspi/boot/
+venelin@clevo /media/venelin/raspi $ sudo mount /dev/mmcblk0p2 /media/venelin/raspi/root/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;ssh-activation&quot;&gt;SSH Activation&lt;/h4&gt;
+&lt;p&gt;According to the latest Raspbian Lite changelog&lt;/p&gt;
+
+&lt;p&gt;http://downloads.raspberrypi.org/raspbian/release_notes.txt&lt;/p&gt;
+
+&lt;p&gt;SSH is now disabled by default. I don’t plan on using a monitor to access the Raspberry, therefore SSH must be enabled. This is fairly easy, we need only to create an empty file in the boot partition:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ touch /media/venelin/raspi/boot/ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;assigning-a-static-ip-address-obsolete&quot;&gt;Assigning a Static IP Address (Obsolete)&lt;/h4&gt;
+
+&lt;p&gt;Note: This has worked for Raspbian Jessie, but the latest Raspbian Stretch has changed some of the networking configuration, and the below 
+guide hasn’t been tested with that yet!&lt;/p&gt;
+
+&lt;p&gt;In my home network I like to have a dedicated IP for any server machine. This is mostly caused by lack of flexibility of my router software in regard to DHCP. It is at least possible to configure the range for dynamic IPs, so I have restricted them to a certain range. Anything above that can be safely assigned a static IP address.&lt;/p&gt;
+
+&lt;p&gt;In the latest versions of Raspbian it is best to configure a static IP via the DHCP configuration file&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/etc/dhcpcd.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The static IP configuration is added to the end of the file:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;interface eth0
+
+static ip_address=192.168.0.100/24
+static routers=192.168.0.1
+static domain_name_servers=192.168.0.1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this case my router has an IP 192.168.0.1.&lt;/p&gt;
+
+&lt;h4 id=&quot;dhcp-configuration-for-wifi-updated-for-raspbian-stretch&quot;&gt;DHCP Configuration For Wifi (Updated for Raspbian Stretch)&lt;/h4&gt;
+
+&lt;p&gt;In addition to enabling ssh via creating an empty file in the boot partition (see above), we also need to put the wifi credentials in the boot partition as well. Allegedly, &lt;em&gt;wpa_supplicant.conf&lt;/em&gt; has to be fully specified, so we first copy the existing &lt;em&gt;/etc/wpa_supplicant/wpa_supplicant.conf&lt;/em&gt; to &lt;em&gt;/boot/wpa_supplicant.conf&lt;/em&gt;. Then, we can encode the wifi password:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;wpa_passphrase &quot;wifi ssid&quot; &quot;wifi password&quot;
+
+network={
+	ssid=&quot;wifi ssid&quot;
+	#psk=&quot;wifi password&quot;
+	psk=7e74dd066afb9ee688dbc30cd223e2299e3429c7bc8081ed717ae2ef370ce4e1
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The full configuration file looks as follows:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;country=DE
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+network={
+	ssid=&quot;wifi ssid&quot;
+	psk=7e74dd066afb9ee688dbc30cd223e2299e3429c7bc8081ed717ae2ef370ce4e1
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;After the system boots for the first time, it moves the configuration file to its standard location at&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/etc/wpa_supplicant/wpa_supplicant.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;prepare-the-sd-card-for-removal&quot;&gt;Prepare the SD Card for Removal&lt;/h4&gt;
+
+&lt;p&gt;The mounted partitions should be unmounted before the SD card is removed:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;venelin@clevo ~ $ sudo umount /dev/mmcblk0p1 
+venelin@clevo ~ $ sudo umount /dev/mmcblk0p2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Welcome to my personal tech blog</title>
+   <link href="http://localhost:4000/2016/11/04/welcome-to-ghost/"/>
+   <updated>2016-11-04T06:49:26+01:00</updated>
+   <id>http://localhost:4000/2016/11/04/welcome-to-ghost</id>
+   <content type="html">&lt;p&gt;First post.&lt;/p&gt;
+</content>
+ </entry>
+ 
+
+</feed>

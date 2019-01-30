@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90658879-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-90658879-1');
+  </script>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/public/icons/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="/public/icons/favicon-160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/icons/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/public/icons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/public/icons/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/public/icons/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/public/icons/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/icons/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/public/icons/favicon-60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/public/icons/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/public/icons/favicon-76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/public/icons/favicon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/icons/favicon-180.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=PT%20Serif" rel="stylesheet">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      How to Install ROS (Robot Operating System) On Raspberry Pi 3 with Raspbian Stretch &middot; Venelin Petkov
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+
+
+  <div class="sidebar-item">
+      <img src="https://s.gravatar.com/avatar/b2133fea3fa95e847523b6f9a6884142?s=200"/>
+  </div>
+
+  <div class="sidebar-item">
+    <p>This is my personal blog, so you can expect random bits and pieces about various hobby projects if mine. Also visit Engineering Learning Machines or contact me via LinkedIn.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+
+    <a class="sidebar-nav-item" href="https://engineering-learning-machines.com">
+      Engineering Learning Machines
+    </a>
+
+    <a class="sidebar-nav-item" href="https://github.com/rseed42">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x"></i>
+        </span>
+
+      GitHub
+    </a>
+    <a class="sidebar-nav-item" href="https://linkedin.com/in/venelin-petkov-13374372">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-linkedin fa-stack-1x"></i>
+        </span>
+        LinkedIn Profile
+    </a>
+
+    </a>
+
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Venelin Petkov</a>
+            <small>Making things work since 1982</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">How to Install ROS (Robot Operating System) On Raspberry Pi 3 with Raspbian Stretch</h1>
+  <span class="post-date">19 Nov 2017</span>
+  <h1 id="installation-instructions">Installation Instructions</h1>
+<p>An easier way to install ROS on Raspberry Pi is to use the Linux Mate distribution for Raspberry. However, I am unwilling to use bloated software, so here we do it the hard way :).</p>
+
+<p>This guide describes how to install a barebone kinetic ROS distribution. The installation of additional packages is described in follow-up posts.</p>
+
+<h4 id="preparation">Preparation</h4>
+<p>We need to install some catkin bootstrap packages first. In order to do this, we must add the ros software repository. It seems that Raspbian Stretch is missing the certificate management service by default, so we have to install it first:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install dirmngr
+</code></pre></div></div>
+<p>Now we can add the ROS repository to apt:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'
+</code></pre></div></div>
+<p>Add the public key:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+</code></pre></div></div>
+<p>Update apt:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get update
+</code></pre></div></div>
+<p>Install the bootstrap dependencies:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential
+</code></pre></div></div>
+<p>This will pull some other package dependencies, for instance <code class="highlighter-rouge">build-essentials</code>.</p>
+
+<h4 id="installation">Installation</h4>
+<h6 id="1-initialize-the-ros-package-system">1. Initialize the ROS package system</h6>
+<p>The first step is to initialize the <em>rosdep</em> package manager. As per the documentation, <strong>do not use sudo</strong> for <code class="highlighter-rouge">rosdep update</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rosdep init
+rosdep update
+</code></pre></div></div>
+<h6 id="2-create-the-catkin-workspace">2. Create the catkin workspace</h6>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/ros_catkin_ws
+cd ~/ros_catkin_ws
+</code></pre></div></div>
+<h6 id="3-build-a-list-of-packages-and-dependencies">3. Build a list of packages and dependencies</h6>
+<p>The command <code class="highlighter-rouge">rosinstall_generator</code> is used to plan out the build process by generating a <code class="highlighter-rouge">*.rosinstall</code> file. It resolves all dependencies for the specified package and writes them down in the <code class="highlighter-rouge">rosinstall</code> file. That file is used by the <code class="highlighter-rouge">wstool</code> to fetch the source code for all packages.</p>
+
+<p>The very minimal installation is based on the <code class="highlighter-rouge">ros_comm</code> package:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosinstall_generator ros_comm --rosdistro kinetic --deps --wet-only --tar &gt; kinetic-ros_comm-wet.rosinstall
+</code></pre></div></div>
+<p>Here <code class="highlighter-rouge">--wet-only</code> describes that only catkin (the new build system) packages are to be fetched. If you don’t want to start with the very basic system, there are a few other options available:</p>
+
+<ul>
+  <li>robot</li>
+  <li>perception</li>
+  <li>move-arm</li>
+  <li>simulators</li>
+  <li>viz</li>
+</ul>
+
+<p>For more info check the documentation at the <a href="http://ros.org/reps/rep-0131.html#variants">ROS Wiki</a>.</p>
+
+<h6 id="4-fetch-the-packages">4. Fetch the packages</h6>
+
+<p>The command <code class="highlighter-rouge">wstool</code> is used to obtain the source code automatically. It can download the packages in parallel, controlled by the <code class="highlighter-rouge">-j</code> option. In this step, a higher parallelization (-j8) is fine:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wstool init -j8 src kinetic-ros_comm-wet.rosinstall
+</code></pre></div></div>
+<p>If the <code class="highlighter-rouge">wstool init</code> command fails or it gets interrupted, the download can be resumed as follows:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wstool update -j4 -t src
+</code></pre></div></div>
+<p>When finished, the source code for the required packages can be found in</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/ros_catkin_ws/src
+</code></pre></div></div>
+<p>Even though we have downloaded the packages in <code class="highlighter-rouge">ros_comm</code>, there might be external dependencies (libraries and tools) that are not yet installed on the Raspbian OS. In order to fetch them automatically, we invoke the following command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+</code></pre></div></div>
+<p>It installs everything via the apt package manager. The dependecies are resolved for all ROS source packages in the <code class="highlighter-rouge">--from-paths</code> directory. Since the above command is recursive, we tell it via <code class="highlighter-rouge">--ignore-src</code> not to install the packages already in the src directory. As we are not working in the ROS environment yet, we have to also specify the distribution name with the <code class="highlighter-rouge">--rosdistro</code> parameter.</p>
+
+<h6 id="5-build-the-ros-packages">5. Build the ROS packages</h6>
+<p>The command for building the packages has been fetched with wstool along with the source code and is located in the <code class="highlighter-rouge">src</code> directory. The <code class="highlighter-rouge">catkin_make_isolated</code> is used for a mix of catkin and cmake packages. If only catkin packages are to be built, the <code class="highlighter-rouge">catkin_make</code> should be used instead (custom-built ROS packages).</p>
+
+<p>The Raspberry 3 has limited memory. With the default parallel setting <code class="highlighter-rouge">-j4</code>, it overflows and the build process fails. Empirically, <code class="highlighter-rouge">-j2</code> is a good parameter.</p>
+
+<p>Finally, the install location can be specified with the <code class="highlighter-rouge">--make-space</code> parameter. In order to simplify the process, we can make the current user owner of the target directory where we want to install ROS:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mkdir -p /opt/ros/kinetic
+sudo chown rseed42:rseed42 /opt/ros/kinetic
+</code></pre></div></div>
+
+<p>Start the build command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./src/catkin/bin/catkin_make_isolated -j2 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+</code></pre></div></div>
+<p>If there is a problem with the compilation (crash due to memory exhaustion), the command can be issued again and the packages that are already compiled will be skipped, so it continues from where it left off.</p>
+
+<h6 id="6-test-the-installation">6. Test the installation</h6>
+<p>ROS uses a few environment variables that have to be set up prior to using it. According to the build command above, we can find a setup script at:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source /opt/ros/kinetic/setup.bash
+</code></pre></div></div>
+<p>Check that the ROS environment variables are set:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
+ROS_ROOT=/opt/ros/kinetic/share/ros
+ROS_MASTER_URI=http://localhost:11311
+ROS_PACKAGE_PATH=/opt/ros/kinetic/share
+ROSLISP_PACKAGE_DIRECTORIES=
+ROS_DISTRO=kinetic
+</code></pre></div></div>
+<p>We need to start the ROS core process as follows:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roscore
+</code></pre></div></div>
+<p>We can now check the default topics with:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rseed42@raspi:~/ros_catkin_ws$ rostopic list
+/rosout
+/rosout_agg
+</code></pre></div></div>
+<p>Everything seems fine, this was the easy part!</p>
+
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/05/31/moved-blog-to-github/">
+            Blog Migration
+            <small>31 May 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/11/19/how-to-install-a-raspberry-camera-node-on-ros-kinetic-raspbian-stretch/">
+            How to install a Raspberry Camera Node on ROS Kinetic (Raspbian Stretch)
+            <small>19 Nov 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2016/12/18/installing-arduino-on-raspberry-pi-3/">
+            Installing Arduino on Raspberry Pi 3
+            <small>18 Dec 2016</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+        
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

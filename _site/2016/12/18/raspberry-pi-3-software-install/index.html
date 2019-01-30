@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90658879-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-90658879-1');
+  </script>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/public/icons/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="/public/icons/favicon-160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/icons/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/public/icons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/public/icons/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/public/icons/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/public/icons/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/icons/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/public/icons/favicon-60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/public/icons/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/public/icons/favicon-76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/public/icons/favicon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/icons/favicon-180.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=PT%20Serif" rel="stylesheet">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Raspberry Pi 3 Software Install &middot; Venelin Petkov
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+
+
+  <div class="sidebar-item">
+      <img src="https://s.gravatar.com/avatar/b2133fea3fa95e847523b6f9a6884142?s=200"/>
+  </div>
+
+  <div class="sidebar-item">
+    <p>This is my personal blog, so you can expect random bits and pieces about various hobby projects if mine. Also visit Engineering Learning Machines or contact me via LinkedIn.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+
+    <a class="sidebar-nav-item" href="https://engineering-learning-machines.com">
+      Engineering Learning Machines
+    </a>
+
+    <a class="sidebar-nav-item" href="https://github.com/rseed42">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x"></i>
+        </span>
+
+      GitHub
+    </a>
+    <a class="sidebar-nav-item" href="https://linkedin.com/in/venelin-petkov-13374372">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-linkedin fa-stack-1x"></i>
+        </span>
+        LinkedIn Profile
+    </a>
+
+    </a>
+
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Venelin Petkov</a>
+            <small>Making things work since 1982</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Raspberry Pi 3 Software Install</h1>
+  <span class="post-date">18 Dec 2016</span>
+  <h4 id="preliminary-configuration">Preliminary Configuration</h4>
+
+<p>First, let’s update the system:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ sudo apt-get update
+</code></pre></div></div>
+<p>and upgrade any available packages</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ sudo apt-get upgrade
+</code></pre></div></div>
+<h4 id="useful-software-packages">Useful Software Packages</h4>
+<p>First, let’s install a familiar text editor. This goes a little bit against the minimalist concept, but since I am also using the Raspberry for development, it is actually useful to have something like that here. You are free to choose your tools, of course.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install emacs
+</code></pre></div></div>
+<p>A mandatory package is Git</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y git
+</code></pre></div></div>
+<p>If you plan to program Arduino from the Raspberry Pi on the command line, then one very useful tool is the Python serial library.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y python-serial
+</code></pre></div></div>
+<p>I like to use a terminal multiplexer to run long-running processes that I haven’t daemonized yet:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y tmux
+</code></pre></div></div>
+<p>A useful resource monitoring tool is a modern version of top:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install htop
+</code></pre></div></div>
+<p>One of the most important commands is gpio utility of the wiringpi library. It can be used directly to turn on/off gpio pins and also to show their state.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install wiringpi
+</code></pre></div></div>
+<p>Example test command</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ gpio readall
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
+ |   2 |   8 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5V      |     |     |
+ |   3 |   9 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |     |
+ |   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 0 | IN   | TxD     | 15  | 14  |
+ |     |     |      0v |      |   |  9 || 10 | 1 | IN   | RxD     | 16  | 15  |
+ |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
+ |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
+ |  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
+ |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
+ |  10 |  12 |    MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
+ |   9 |  13 |    MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
+ |  11 |  14 |    SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
+ |     |     |      0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
+ |   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
+ |   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
+ |   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
+ |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
+ |  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
+ |  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
+ |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+
+</code></pre></div></div>
+
+<h4 id="enable-some-kernel-features">Enable Some Kernel Features</h4>
+
+<p>If you want to connect some devices directly to the Raspberry, you might need to use a couple of additional features, so you can optionally enable them with the</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo raspi-config
+</code></pre></div></div>
+<p>tool.</p>
+
+<p>More specifically, these are interfaces that allow you to program microcontrollers and connect some devices over i2c:</p>
+
+<ul>
+  <li>Enable SPI interface</li>
+  <li>Enable i2c interface</li>
+</ul>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/05/31/moved-blog-to-github/">
+            Blog Migration
+            <small>31 May 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/11/19/how-to-install-a-raspberry-camera-node-on-ros-kinetic-raspbian-stretch/">
+            How to install a Raspberry Camera Node on ROS Kinetic (Raspbian Stretch)
+            <small>19 Nov 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/11/19/how-to-install-ros-robot-operating-system-on-raspberry-pi-3-with-raspbian-stretch/">
+            How to Install ROS (Robot Operating System) On Raspberry Pi 3 with Raspbian Stretch
+            <small>19 Nov 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+        
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

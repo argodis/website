@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90658879-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-90658879-1');
+  </script>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/public/icons/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="/public/icons/favicon-160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/icons/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/public/icons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/public/icons/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/public/icons/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/public/icons/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/icons/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/public/icons/favicon-60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/public/icons/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/public/icons/favicon-76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/public/icons/favicon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/icons/favicon-180.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=PT%20Serif" rel="stylesheet">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Venelin Petkov &middot; Making things work since 1982
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+
+
+  <div class="sidebar-item">
+      <img src="https://s.gravatar.com/avatar/b2133fea3fa95e847523b6f9a6884142?s=200"/>
+  </div>
+
+  <div class="sidebar-item">
+    <p>This is my personal blog, so you can expect random bits and pieces about various hobby projects if mine. Also visit Engineering Learning Machines or contact me via LinkedIn.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+
+    <a class="sidebar-nav-item" href="https://engineering-learning-machines.com">
+      Engineering Learning Machines
+    </a>
+
+    <a class="sidebar-nav-item" href="https://github.com/rseed42">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x"></i>
+        </span>
+
+      GitHub
+    </a>
+    <a class="sidebar-nav-item" href="https://linkedin.com/in/venelin-petkov-13374372">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-linkedin fa-stack-1x"></i>
+        </span>
+        LinkedIn Profile
+    </a>
+
+    </a>
+
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Venelin Petkov</a>
+            <small>Making things work since 1982</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="//2018/05/31/moved-blog-to-github/">
+        Blog Migration
+      </a>
+    </h1>
+
+    <span class="post-date">31 May 2018</span>
+
+    <h1 id="update-blog-migration-to-github">Update: Blog Migration to Github</h1>
+
+<p>For over a year now I have been running this blog on the <a href="https://ghost.org/">Ghost platform</a> inside a cheap <a href="https://www.digitalocean.com/">Digital Ocean</a> instance. I needed a server for
+some hobby projects, so it was not a big deal, I am not expecting big traffic here anyway. Recently I grew more ambitious (see <a href="https://www.engineering-learning-machines.com/">Engineering Learning Machines</a>), therefore I don’t have much use for the Digital Ocean instance anymore, so it didn’t make sense to support it only for the blog. Fortunately, GitHub offers a free hosting solution called <a href="https://pages.github.com/">GitHub Pages</a> (which I did use a couple of years back) that is free for lower-traffic sites like this one. This platform is based on <a href="https://jekyllrb.com/">Jekyll</a>, a static web page generator.</p>
+
+<p>The migration was a breeze, mostly due to the <a href="https://github.com/eloyesp/jekyll_ghost_importer">Jekyll Ghost Importer</a> plugin. The following post by <a href="https://nikhita.github.io/build-blog-using-github-jekyll">Nikhita Raghunath</a> also
+offers some valuable tips on how to configure your Jekyll instance as a blog.</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="//2017/11/19/how-to-install-a-raspberry-camera-node-on-ros-kinetic-raspbian-stretch/">
+        How to install a Raspberry Camera Node on ROS Kinetic (Raspbian Stretch)
+      </a>
+    </h1>
+
+    <span class="post-date">19 Nov 2017</span>
+
+    <h1 id="raspicam-installation-tutorial">Raspicam Installation Tutorial</h1>
+
+<p>In order to use the Raspberry Pi 3 camera v2, we need to install a third-party ROS node from source, since it is not part of the ROS distribution at the moment. The installation is not that straightforward using only the barebones ROS installation, since there are a few dependencies on other packages. Looking at the package definition <a href="https://github.com/UbiquityRobotics/raspicam_node/blob/indigo/package.xml">package.xml</a>, we see the following dependencies:</p>
+
+<ul>
+  <li>catkin</li>
+  <li><code class="highlighter-rouge">compressed_image_transport</code></li>
+  <li>roscpp</li>
+  <li>std_msgs</li>
+  <li>std_srvs</li>
+  <li>sensor_msgs</li>
+  <li><code class="highlighter-rouge">camera_info_manager</code></li>
+  <li><code class="highlighter-rouge">dynamic_reconfigure</code></li>
+  <li>libraspberrypi0</li>
+</ul>
+
+<p>The highlighted ones are missing from the <code class="highlighter-rouge">ros_comm</code> stack, so we need to install them manually. The approach here is simply to fetch the missing packages and then merge them into the existing barebones catkin workspace. Lastly, we build and test <code class="highlighter-rouge">raspicam_node</code>.</p>
+
+<h6 id="1-install-all-dependencies">1. Install all dependencies</h6>
+
+<p>Fetch the package information for all the missing packages and their ROS dependencies:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosinstall_generator compressed_image_transport --rosdistro kinetic --deps --wet-only --tar &gt; kinetic-compressed_image_transport-wet.rosinstall
+
+rosinstall_generator camera_info_manager --rosdistro kinetic --deps --wet-only --tar &gt; kinetic-camera_info_manager-wet.rosinstall
+
+rosinstall_generator dynamic_reconfigure --rosdistro kinetic --deps --wet-only --tar &gt; kinetic-dynamic_reconfigure-wet.rosinstall
+</code></pre></div></div>
+<p>Now we need to fetch the sources and put them to the <code class="highlighter-rouge">~/ros_catkin_ws/src</code> where all the other packages from the barebone installation are located:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wstool merge -t src kinetic-compressed_image_transport-wet.rosinstall
+wstool merge -t src kinetic-camera_info_manager-wet.rosinstall
+wstool merge -t src kinetic-dynamic_reconfigure-wet.rosinstall
+</code></pre></div></div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wstool update -t src
+</code></pre></div></div>
+<p>Fetch any additional Raspbian libraries that are needed</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+</code></pre></div></div>
+<p>Build the packages. Please, note that this takes a very long time, so it might be a good idea to build it overnight in a tmux window.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./src/catkin/bin/catkin_make_isolated -j1 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+</code></pre></div></div>
+<p>It turns out that <code class="highlighter-rouge">raspicam_node</code> depends on the raspberry pi library, so we also install the headers:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install libraspberrypi-dev
+</code></pre></div></div>
+<h6 id="2-build-the-raspicam-node">2. Build the raspicam node</h6>
+<p>Check out the source code for <code class="highlighter-rouge">raspicam_node</code> from Github in the workspace src directory:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/ros_catkin_ws
+git clone https://github.com/UbiquityRobotics/raspicam_node.git
+</code></pre></div></div>
+<p>Install other library dependencies automatically:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+</code></pre></div></div>
+<p>Finally, build and install <code class="highlighter-rouge">raspicam_node</code>. It should be possible to do this more specifically with <code class="highlighter-rouge">--pkg raspicam</code> and save some time, but this hasn’t been tried yet. Two compilation processes <code class="highlighter-rouge">-j2</code> are a safe option here:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./src/catkin/bin/catkin_make_isolated -j2 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+</code></pre></div></div>
+
+<h6 id="3-test-the-camera">3. Test the camera</h6>
+<p>Now that we have the camera node installed, we can test the Raspberry camera if we haven’t done that yet. It needs to be enabled with <code class="highlighter-rouge">raspi-config</code> from the <code class="highlighter-rouge">interface</code> menu:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo raspi-config
+</code></pre></div></div>
+<p>Take a test shot</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>raspistill -o test.jpg
+</code></pre></div></div>
+<p>Everything is fine, so we can test the raspicam node.</p>
+
+<h6 id="4-test-raspicam_node">4. Test raspicam_node</h6>
+<p>Start a new tmux session and source the setup file in every relevant window</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source /opt/ros/kinetic/setup.bash
+</code></pre></div></div>
+<p>Open a new window for <code class="highlighter-rouge">roscore</code> and start it there. Find the launch definitions in 
+<code class="highlighter-rouge">~/ros_catkin_ws/src/raspicam_node/launch/</code> and go there:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/ros_catkin_ws/src/raspicam_node/launch/
+</code></pre></div></div>
+<p>Start <code class="highlighter-rouge">raspicam_node</code> with the launch configuration of choice:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roslaunch camerav2_1280x960.launch
+</code></pre></div></div>
+<p>A simple topic check shows us that the node is active:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rseed42@raspi:~$ rostopic list
+/raspicam_node/camera_info
+/raspicam_node/image/compressed
+/raspicam_node/parameter_descriptions
+/raspicam_node/parameter_updates
+/rosout
+/rosout_agg
+</code></pre></div></div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="//2017/11/19/how-to-install-ros-robot-operating-system-on-raspberry-pi-3-with-raspbian-stretch/">
+        How to Install ROS (Robot Operating System) On Raspberry Pi 3 with Raspbian Stretch
+      </a>
+    </h1>
+
+    <span class="post-date">19 Nov 2017</span>
+
+    <h1 id="installation-instructions">Installation Instructions</h1>
+<p>An easier way to install ROS on Raspberry Pi is to use the Linux Mate distribution for Raspberry. However, I am unwilling to use bloated software, so here we do it the hard way :).</p>
+
+<p>This guide describes how to install a barebone kinetic ROS distribution. The installation of additional packages is described in follow-up posts.</p>
+
+<h4 id="preparation">Preparation</h4>
+<p>We need to install some catkin bootstrap packages first. In order to do this, we must add the ros software repository. It seems that Raspbian Stretch is missing the certificate management service by default, so we have to install it first:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install dirmngr
+</code></pre></div></div>
+<p>Now we can add the ROS repository to apt:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" &gt; /etc/apt/sources.list.d/ros-latest.list'
+</code></pre></div></div>
+<p>Add the public key:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+</code></pre></div></div>
+<p>Update apt:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get update
+</code></pre></div></div>
+<p>Install the bootstrap dependencies:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install python-rosdep python-rosinstall-generator python-wstool python-rosinstall build-essential
+</code></pre></div></div>
+<p>This will pull some other package dependencies, for instance <code class="highlighter-rouge">build-essentials</code>.</p>
+
+<h4 id="installation">Installation</h4>
+<h6 id="1-initialize-the-ros-package-system">1. Initialize the ROS package system</h6>
+<p>The first step is to initialize the <em>rosdep</em> package manager. As per the documentation, <strong>do not use sudo</strong> for <code class="highlighter-rouge">rosdep update</code>:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo rosdep init
+rosdep update
+</code></pre></div></div>
+<h6 id="2-create-the-catkin-workspace">2. Create the catkin workspace</h6>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/ros_catkin_ws
+cd ~/ros_catkin_ws
+</code></pre></div></div>
+<h6 id="3-build-a-list-of-packages-and-dependencies">3. Build a list of packages and dependencies</h6>
+<p>The command <code class="highlighter-rouge">rosinstall_generator</code> is used to plan out the build process by generating a <code class="highlighter-rouge">*.rosinstall</code> file. It resolves all dependencies for the specified package and writes them down in the <code class="highlighter-rouge">rosinstall</code> file. That file is used by the <code class="highlighter-rouge">wstool</code> to fetch the source code for all packages.</p>
+
+<p>The very minimal installation is based on the <code class="highlighter-rouge">ros_comm</code> package:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosinstall_generator ros_comm --rosdistro kinetic --deps --wet-only --tar &gt; kinetic-ros_comm-wet.rosinstall
+</code></pre></div></div>
+<p>Here <code class="highlighter-rouge">--wet-only</code> describes that only catkin (the new build system) packages are to be fetched. If you don’t want to start with the very basic system, there are a few other options available:</p>
+
+<ul>
+  <li>robot</li>
+  <li>perception</li>
+  <li>move-arm</li>
+  <li>simulators</li>
+  <li>viz</li>
+</ul>
+
+<p>For more info check the documentation at the <a href="http://ros.org/reps/rep-0131.html#variants">ROS Wiki</a>.</p>
+
+<h6 id="4-fetch-the-packages">4. Fetch the packages</h6>
+
+<p>The command <code class="highlighter-rouge">wstool</code> is used to obtain the source code automatically. It can download the packages in parallel, controlled by the <code class="highlighter-rouge">-j</code> option. In this step, a higher parallelization (-j8) is fine:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wstool init -j8 src kinetic-ros_comm-wet.rosinstall
+</code></pre></div></div>
+<p>If the <code class="highlighter-rouge">wstool init</code> command fails or it gets interrupted, the download can be resumed as follows:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wstool update -j4 -t src
+</code></pre></div></div>
+<p>When finished, the source code for the required packages can be found in</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/ros_catkin_ws/src
+</code></pre></div></div>
+<p>Even though we have downloaded the packages in <code class="highlighter-rouge">ros_comm</code>, there might be external dependencies (libraries and tools) that are not yet installed on the Raspbian OS. In order to fetch them automatically, we invoke the following command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rosdep install --from-paths src --ignore-src --rosdistro kinetic -y
+</code></pre></div></div>
+<p>It installs everything via the apt package manager. The dependecies are resolved for all ROS source packages in the <code class="highlighter-rouge">--from-paths</code> directory. Since the above command is recursive, we tell it via <code class="highlighter-rouge">--ignore-src</code> not to install the packages already in the src directory. As we are not working in the ROS environment yet, we have to also specify the distribution name with the <code class="highlighter-rouge">--rosdistro</code> parameter.</p>
+
+<h6 id="5-build-the-ros-packages">5. Build the ROS packages</h6>
+<p>The command for building the packages has been fetched with wstool along with the source code and is located in the <code class="highlighter-rouge">src</code> directory. The <code class="highlighter-rouge">catkin_make_isolated</code> is used for a mix of catkin and cmake packages. If only catkin packages are to be built, the <code class="highlighter-rouge">catkin_make</code> should be used instead (custom-built ROS packages).</p>
+
+<p>The Raspberry 3 has limited memory. With the default parallel setting <code class="highlighter-rouge">-j4</code>, it overflows and the build process fails. Empirically, <code class="highlighter-rouge">-j2</code> is a good parameter.</p>
+
+<p>Finally, the install location can be specified with the <code class="highlighter-rouge">--make-space</code> parameter. In order to simplify the process, we can make the current user owner of the target directory where we want to install ROS:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo mkdir -p /opt/ros/kinetic
+sudo chown rseed42:rseed42 /opt/ros/kinetic
+</code></pre></div></div>
+
+<p>Start the build command:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./src/catkin/bin/catkin_make_isolated -j2 --install --install-space /opt/ros/kinetic -DCMAKE_BUILD_TYPE=Release
+</code></pre></div></div>
+<p>If there is a problem with the compilation (crash due to memory exhaustion), the command can be issued again and the packages that are already compiled will be skipped, so it continues from where it left off.</p>
+
+<h6 id="6-test-the-installation">6. Test the installation</h6>
+<p>ROS uses a few environment variables that have to be set up prior to using it. According to the build command above, we can find a setup script at:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source /opt/ros/kinetic/setup.bash
+</code></pre></div></div>
+<p>Check that the ROS environment variables are set:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ROS_ETC_DIR=/opt/ros/kinetic/etc/ros
+ROS_ROOT=/opt/ros/kinetic/share/ros
+ROS_MASTER_URI=http://localhost:11311
+ROS_PACKAGE_PATH=/opt/ros/kinetic/share
+ROSLISP_PACKAGE_DIRECTORIES=
+ROS_DISTRO=kinetic
+</code></pre></div></div>
+<p>We need to start the ROS core process as follows:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>roscore
+</code></pre></div></div>
+<p>We can now check the default topics with:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rseed42@raspi:~/ros_catkin_ws$ rostopic list
+/rosout
+/rosout_agg
+</code></pre></div></div>
+<p>Everything seems fine, this was the easy part!</p>
+
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="//2016/12/18/installing-arduino-on-raspberry-pi-3/">
+        Installing Arduino on Raspberry Pi 3
+      </a>
+    </h1>
+
+    <span class="post-date">18 Dec 2016</span>
+
+    <h4 id="overview">Overview</h4>
+<p>This guide will show how to install the latest Arduino IDE and supporting packages to enable the programming of Arduino devices from the Raspberry Pi 3.</p>
+
+<p>You will need a USB to Serial FTDI converter in order to program the Arduino devices and to receive the output of the serial console when testing them.</p>
+
+<p>The complete setup allows us to develop and program Arduino devices on the command line, without any IDE. We are going to use up-to-date versions of the software, so most of the packages will have to be fetched from Github and installed locally.</p>
+
+<h4 id="preliminary-steps">Preliminary Steps</h4>
+
+<p>First, let’s organize the locally installed packages on the Raspberry. I like to use a directory called “local” for this purpose. Since there are no other users, it makes no sense to install anything in system directories. We will place them in ~/local:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/local
+cd local
+</code></pre></div></div>
+
+<h4 id="arduino-ide">Arduino IDE</h4>
+
+<p>Because of some compatibility issues, I prefer to install an up-to-date version of the Arduino IDE. The official Debian package is just too old and not compatible anymore with newer libraries.</p>
+
+<p>Download to the website https://www.arduino.cc/en/Main/Software. Make sure that you select the Linux ARM (experimental) version. The AMD64 architecture doesn’t work on the Raspberry. The current version is</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ARDUINO 1.6.13
+</code></pre></div></div>
+<p>Download the package and move it to the Raspberry with something like:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp arduino-1.6.13-linuxarm.tar.xz raspi:local
+</code></pre></div></div>
+<p>The package can be decompressed inside the ~/local directory using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/local
+tar -xf arduino-1.6.13-linuxarm.tar.xz
+</code></pre></div></div>
+<p>Now we have the Arduino IDE installed under</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/local/arduino-1.6.13
+</code></pre></div></div>
+<p>It contains libraries, board description files, etc.</p>
+
+<p>We can not compile the source files (Arduino sketches) with a plain old Make file, because there are many dependencies and hidden parts from the developer. Therefore, we need Arduino.mk which enables us to work on the command line. It lives on Github, so we just need to clone it to the ~/local directory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ git clone https://github.com/sudar/Arduino-Makefile ~/local/arduino_mk
+Cloning into '/home/vpetkov/local/arduino_mk'...
+remote: Counting objects: 2483, done.
+remote: Total 2483 (delta 0), reused 0 (delta 0), pack-reused 2483
+Receiving objects: 100% (2483/2483), 1.48 MiB | 522.00 KiB/s, done.
+Resolving deltas: 100% (1097/1097), done.
+Checking connectivity... done.
+</code></pre></div></div>
+<p>Now we are set up to make a first test.</p>
+
+<h4 id="test-arduino-installation">Test Arduino Installation</h4>
+<p>First, create a directory that contains the code:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/test
+</code></pre></div></div>
+<p>We need a Makefile and an *.ino file. Let’s create these:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/test
+touch Makefile
+touch Test.ino
+</code></pre></div></div>
+<p>Now, please keep in mind that the programming test requires the following devices:</p>
+
+<ol>
+  <li>A USB to Serial FTDI adapter</li>
+  <li>Arduino Pro Mini 3.3v</li>
+</ol>
+
+<p>The Makefile is tailored for this particular device. If you have another, the hardware-specific parts have to be updated.</p>
+
+<p>Makefile:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BOARD_TAG=pro328
+MCU=atmega328
+MONITOR_PORT=/dev/ttyUSB0
+ARDUINO_DIR = /home/$(shell whoami)/local/arduino-1.6.13
+ARDMK_DIR = /home/$(shell whoami)/local/arduino_mk
+USER_LIB_PATH=/home/$(shell whoami)/local/lib
+BOARD_TAG = pro
+BOARD_SUB = ATmega328
+MCU = atmega328p
+F_CPU=8000000L
+AVRDUDE_ARD_BAUDRATE = 57600
+include $(ARDMK_DIR)/Arduino.mk
+</code></pre></div></div>
+
+<p>The source code is also very simple:</p>
+
+<p>Test.ino:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void setup(){
+  Serial.begin(9600);
+  Serial.println("Arduino on Raspberry Pi Test");
+}
+void loop(){
+  delay(2000);
+  Serial.println("Still there");
+  Serial.print("\n");
+}
+</code></pre></div></div>
+
+<p>Simply compile with “make”. All tools are contained in the Arduino IDE and all configuration in the Makefile:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+</code></pre></div></div>
+
+<p>The program should now be compiled successfully.</p>
+
+<p>When you connect the FTDI converter, make sure that it appears as /tty/USB0. This can be checked with dmesg:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~/test$ dmesg | tail
+[ 8864.644767] usb 1-1.4: Product: CP2102 USB to UART Bridge Controller
+[ 8864.644780] usb 1-1.4: Manufacturer: Silicon Labs
+[ 8864.644792] usb 1-1.4: SerialNumber: 0001
+[ 8865.808457] usbcore: registered new interface driver usbserial
+[ 8865.808562] usbcore: registered new interface driver usbserial_generic
+[ 8865.808649] usbserial: USB Serial support registered for generic
+[ 8865.812262] usbcore: registered new interface driver cp210x
+[ 8865.812395] usbserial: USB Serial support registered for cp210x
+[ 8865.812559] cp210x 1-1.4:1.0: cp210x converter detected
+[ 8865.813036] usb 1-1.4: cp210x converter now attached to ttyUSB0
+</code></pre></div></div>
+<p>We can now program the Arduino. Make sure that you have correctly connected the RX/TX and the reset pins, as well as the Vcc/Ground. You need the 100nF capacitor on the reset line, for it to work correctly.</p>
+
+<p>Please, also make sure that the Python python-serial package is installed, since it is used by Arduino.mk:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make upload
+</code></pre></div></div>
+<p>If sucessful, you should see something like:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/vpetkov/local/arduino-1.6.13/hardware/tools/avr/bin/avrdude -q -V -p atmega328p -C /home/vpetkov/local/arduino-1.6.13/hardware/tools/avr/etc/avrdude.conf -D -c arduino -b 57600 -P /dev/ttyUSB0 \
+		-U flash:w:build-pro-ATmega328/test.hex:i
+
+avrdude: AVR device initialized and ready to accept instructions
+avrdude: Device signature = 0x1e950f (probably m328p)
+avrdude: reading input file "build-pro-ATmega328/test.hex"
+avrdude: writing flash (1668 bytes):
+avrdude: 1668 bytes of flash written
+
+avrdude: safemode: Fuses OK (E:00, H:00, L:00)
+
+avrdude done.  Thank you.
+
+make[1]: Leaving directory '/home/vpetkov/test'
+</code></pre></div></div>
+
+<p>Now we can test the message that the Arduino sends to us. I like to use a python command to monitor the serial port:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m serial.tools.miniterm -p /dev/ttyUSB0 -b 9600
+</code></pre></div></div>
+
+<p>You should see period messages like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Still there
+</code></pre></div></div>
+
+<p>Press Ctrl and ] to exit.</p>
+
+<h4 id="user-libraries">User Libraries</h4>
+
+<p>You might have noticed the line</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>USER_LIB_PATH=/home/$(shell whoami)/local/lib
+</code></pre></div></div>
+
+<p>This is where I put my user libraries. For instance, my temperature/humidity sensor uses the DHT library:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/adafruit/DHT-sensor-library ~/local/lib/DHT
+</code></pre></div></div>
+<p>Also, I use MySensors for the wireless network:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/mysensors/MySensors ~/local/mysensors
+</code></pre></div></div>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="//2016/12/18/raspberry-pi-3-software-install/">
+        Raspberry Pi 3 Software Install
+      </a>
+    </h1>
+
+    <span class="post-date">18 Dec 2016</span>
+
+    <h4 id="preliminary-configuration">Preliminary Configuration</h4>
+
+<p>First, let’s update the system:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ sudo apt-get update
+</code></pre></div></div>
+<p>and upgrade any available packages</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ sudo apt-get upgrade
+</code></pre></div></div>
+<h4 id="useful-software-packages">Useful Software Packages</h4>
+<p>First, let’s install a familiar text editor. This goes a little bit against the minimalist concept, but since I am also using the Raspberry for development, it is actually useful to have something like that here. You are free to choose your tools, of course.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install emacs
+</code></pre></div></div>
+<p>A mandatory package is Git</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y git
+</code></pre></div></div>
+<p>If you plan to program Arduino from the Raspberry Pi on the command line, then one very useful tool is the Python serial library.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y python-serial
+</code></pre></div></div>
+<p>I like to use a terminal multiplexer to run long-running processes that I haven’t daemonized yet:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install -y tmux
+</code></pre></div></div>
+<p>A useful resource monitoring tool is a modern version of top:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install htop
+</code></pre></div></div>
+<p>One of the most important commands is gpio utility of the wiringpi library. It can be used directly to turn on/off gpio pins and also to show their state.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install wiringpi
+</code></pre></div></div>
+<p>Example test command</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ gpio readall
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ |     |     |    3.3v |      |   |  1 || 2  |   |      | 5v      |     |     |
+ |   2 |   8 |   SDA.1 | ALT0 | 1 |  3 || 4  |   |      | 5V      |     |     |
+ |   3 |   9 |   SCL.1 | ALT0 | 1 |  5 || 6  |   |      | 0v      |     |     |
+ |   4 |   7 | GPIO. 7 |   IN | 1 |  7 || 8  | 0 | IN   | TxD     | 15  | 14  |
+ |     |     |      0v |      |   |  9 || 10 | 1 | IN   | RxD     | 16  | 15  |
+ |  17 |   0 | GPIO. 0 |   IN | 0 | 11 || 12 | 0 | IN   | GPIO. 1 | 1   | 18  |
+ |  27 |   2 | GPIO. 2 |   IN | 0 | 13 || 14 |   |      | 0v      |     |     |
+ |  22 |   3 | GPIO. 3 |   IN | 0 | 15 || 16 | 0 | IN   | GPIO. 4 | 4   | 23  |
+ |     |     |    3.3v |      |   | 17 || 18 | 0 | IN   | GPIO. 5 | 5   | 24  |
+ |  10 |  12 |    MOSI | ALT0 | 0 | 19 || 20 |   |      | 0v      |     |     |
+ |   9 |  13 |    MISO | ALT0 | 0 | 21 || 22 | 0 | IN   | GPIO. 6 | 6   | 25  |
+ |  11 |  14 |    SCLK | ALT0 | 0 | 23 || 24 | 1 | OUT  | CE0     | 10  | 8   |
+ |     |     |      0v |      |   | 25 || 26 | 1 | OUT  | CE1     | 11  | 7   |
+ |   0 |  30 |   SDA.0 |   IN | 1 | 27 || 28 | 1 | IN   | SCL.0   | 31  | 1   |
+ |   5 |  21 | GPIO.21 |   IN | 1 | 29 || 30 |   |      | 0v      |     |     |
+ |   6 |  22 | GPIO.22 |   IN | 1 | 31 || 32 | 0 | IN   | GPIO.26 | 26  | 12  |
+ |  13 |  23 | GPIO.23 |   IN | 0 | 33 || 34 |   |      | 0v      |     |     |
+ |  19 |  24 | GPIO.24 |   IN | 0 | 35 || 36 | 0 | IN   | GPIO.27 | 27  | 16  |
+ |  26 |  25 | GPIO.25 |   IN | 0 | 37 || 38 | 0 | IN   | GPIO.28 | 28  | 20  |
+ |     |     |      0v |      |   | 39 || 40 | 0 | IN   | GPIO.29 | 29  | 21  |
+ +-----+-----+---------+------+---+----++----+---+------+---------+-----+-----+
+ | BCM | wPi |   Name  | Mode | V | Physical | V | Mode | Name    | wPi | BCM |
+ +-----+-----+---------+------+---+---Pi 3---+---+------+---------+-----+-----+
+
+</code></pre></div></div>
+
+<h4 id="enable-some-kernel-features">Enable Some Kernel Features</h4>
+
+<p>If you want to connect some devices directly to the Raspberry, you might need to use a couple of additional features, so you can optionally enable them with the</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo raspi-config
+</code></pre></div></div>
+<p>tool.</p>
+
+<p>More specifically, these are interfaces that allow you to program microcontrollers and connect some devices over i2c:</p>
+
+<ul>
+  <li>Enable SPI interface</li>
+  <li>Enable i2c interface</li>
+</ul>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <a class="pagination-item older" href="/page2">Older</a>
+  
+  
+    <span class="pagination-item newer">Newer</span>
+  
+</div>
+
+
+        
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>

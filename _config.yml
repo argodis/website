@@ -1,0 +1,24 @@
+# Permalinks
+#
+# Use of `relative_permalinks` ensures post links from the index work properly.
+permalink:           pretty
+# relative_permalinks: true
+
+# Setup
+title:               Venelin Petkov
+tagline:             'Making things work since 1982'
+description:         'This is my personal blog, so you can expect random bits and pieces about various hobby projects if mine. Also visit Engineering Learning Machines or contact me via LinkedIn.'
+url:                 https://venelinpetkov.com
+baseurl:             ''
+paginate:            5
+
+# About/contact
+author:
+  name:              Venelin Petkov
+
+# Custom vars
+version:             1.0.0
+
+# More
+plugins: [jekyll-paginate]
+paginate-path: "page:num"

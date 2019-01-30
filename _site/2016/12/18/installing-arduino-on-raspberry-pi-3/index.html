@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-90658879-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-90658879-1');
+  </script>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/favicon.ico">
+  <link rel="icon" sizes="16x16 32x32 64x64" href="/public/icons/favicon.ico">
+  <link rel="icon" type="image/png" sizes="196x196" href="/public/icons/favicon-192.png">
+  <link rel="icon" type="image/png" sizes="160x160" href="/public/icons/favicon-160.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/public/icons/favicon-96.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/public/icons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/icons/favicon-16.png">
+  <link rel="apple-touch-icon" href="/public/icons/favicon-57.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/public/icons/favicon-114.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/public/icons/favicon-72.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/public/icons/favicon-144.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/public/icons/favicon-60.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/public/icons/favicon-120.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/public/icons/favicon-76.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/public/icons/favicon-152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/public/icons/favicon-180.png">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=PT%20Serif" rel="stylesheet">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Installing Arduino on Raspberry Pi 3 &middot; Venelin Petkov
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/lanyon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body>
+
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+
+
+  <div class="sidebar-item">
+      <img src="https://s.gravatar.com/avatar/b2133fea3fa95e847523b6f9a6884142?s=200"/>
+  </div>
+
+  <div class="sidebar-item">
+    <p>This is my personal blog, so you can expect random bits and pieces about various hobby projects if mine. Also visit Engineering Learning Machines or contact me via LinkedIn.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/about/">About Me</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">Archive</a>
+        
+      
+    
+      
+    
+      
+        
+      
+    
+
+    <a class="sidebar-nav-item" href="https://engineering-learning-machines.com">
+      Engineering Learning Machines
+    </a>
+
+    <a class="sidebar-nav-item" href="https://github.com/rseed42">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-github fa-stack-1x"></i>
+        </span>
+
+      GitHub
+    </a>
+    <a class="sidebar-nav-item" href="https://linkedin.com/in/venelin-petkov-13374372">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-linkedin fa-stack-1x"></i>
+        </span>
+        LinkedIn Profile
+    </a>
+
+    </a>
+
+
+    <span class="sidebar-nav-item">Currently v1.0.0</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Venelin Petkov</a>
+            <small>Making things work since 1982</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">Installing Arduino on Raspberry Pi 3</h1>
+  <span class="post-date">18 Dec 2016</span>
+  <h4 id="overview">Overview</h4>
+<p>This guide will show how to install the latest Arduino IDE and supporting packages to enable the programming of Arduino devices from the Raspberry Pi 3.</p>
+
+<p>You will need a USB to Serial FTDI converter in order to program the Arduino devices and to receive the output of the serial console when testing them.</p>
+
+<p>The complete setup allows us to develop and program Arduino devices on the command line, without any IDE. We are going to use up-to-date versions of the software, so most of the packages will have to be fetched from Github and installed locally.</p>
+
+<h4 id="preliminary-steps">Preliminary Steps</h4>
+
+<p>First, let’s organize the locally installed packages on the Raspberry. I like to use a directory called “local” for this purpose. Since there are no other users, it makes no sense to install anything in system directories. We will place them in ~/local:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/local
+cd local
+</code></pre></div></div>
+
+<h4 id="arduino-ide">Arduino IDE</h4>
+
+<p>Because of some compatibility issues, I prefer to install an up-to-date version of the Arduino IDE. The official Debian package is just too old and not compatible anymore with newer libraries.</p>
+
+<p>Download to the website https://www.arduino.cc/en/Main/Software. Make sure that you select the Linux ARM (experimental) version. The AMD64 architecture doesn’t work on the Raspberry. The current version is</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ARDUINO 1.6.13
+</code></pre></div></div>
+<p>Download the package and move it to the Raspberry with something like:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>scp arduino-1.6.13-linuxarm.tar.xz raspi:local
+</code></pre></div></div>
+<p>The package can be decompressed inside the ~/local directory using:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/local
+tar -xf arduino-1.6.13-linuxarm.tar.xz
+</code></pre></div></div>
+<p>Now we have the Arduino IDE installed under</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/local/arduino-1.6.13
+</code></pre></div></div>
+<p>It contains libraries, board description files, etc.</p>
+
+<p>We can not compile the source files (Arduino sketches) with a plain old Make file, because there are many dependencies and hidden parts from the developer. Therefore, we need Arduino.mk which enables us to work on the command line. It lives on Github, so we just need to clone it to the ~/local directory:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~$ git clone https://github.com/sudar/Arduino-Makefile ~/local/arduino_mk
+Cloning into '/home/vpetkov/local/arduino_mk'...
+remote: Counting objects: 2483, done.
+remote: Total 2483 (delta 0), reused 0 (delta 0), pack-reused 2483
+Receiving objects: 100% (2483/2483), 1.48 MiB | 522.00 KiB/s, done.
+Resolving deltas: 100% (1097/1097), done.
+Checking connectivity... done.
+</code></pre></div></div>
+<p>Now we are set up to make a first test.</p>
+
+<h4 id="test-arduino-installation">Test Arduino Installation</h4>
+<p>First, create a directory that contains the code:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir ~/test
+</code></pre></div></div>
+<p>We need a Makefile and an *.ino file. Let’s create these:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd ~/test
+touch Makefile
+touch Test.ino
+</code></pre></div></div>
+<p>Now, please keep in mind that the programming test requires the following devices:</p>
+
+<ol>
+  <li>A USB to Serial FTDI adapter</li>
+  <li>Arduino Pro Mini 3.3v</li>
+</ol>
+
+<p>The Makefile is tailored for this particular device. If you have another, the hardware-specific parts have to be updated.</p>
+
+<p>Makefile:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BOARD_TAG=pro328
+MCU=atmega328
+MONITOR_PORT=/dev/ttyUSB0
+ARDUINO_DIR = /home/$(shell whoami)/local/arduino-1.6.13
+ARDMK_DIR = /home/$(shell whoami)/local/arduino_mk
+USER_LIB_PATH=/home/$(shell whoami)/local/lib
+BOARD_TAG = pro
+BOARD_SUB = ATmega328
+MCU = atmega328p
+F_CPU=8000000L
+AVRDUDE_ARD_BAUDRATE = 57600
+include $(ARDMK_DIR)/Arduino.mk
+</code></pre></div></div>
+
+<p>The source code is also very simple:</p>
+
+<p>Test.ino:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void setup(){
+  Serial.begin(9600);
+  Serial.println("Arduino on Raspberry Pi Test");
+}
+void loop(){
+  delay(2000);
+  Serial.println("Still there");
+  Serial.print("\n");
+}
+</code></pre></div></div>
+
+<p>Simply compile with “make”. All tools are contained in the Arduino IDE and all configuration in the Makefile:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make
+</code></pre></div></div>
+
+<p>The program should now be compiled successfully.</p>
+
+<p>When you connect the FTDI converter, make sure that it appears as /tty/USB0. This can be checked with dmesg:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vpetkov@raspi:~/test$ dmesg | tail
+[ 8864.644767] usb 1-1.4: Product: CP2102 USB to UART Bridge Controller
+[ 8864.644780] usb 1-1.4: Manufacturer: Silicon Labs
+[ 8864.644792] usb 1-1.4: SerialNumber: 0001
+[ 8865.808457] usbcore: registered new interface driver usbserial
+[ 8865.808562] usbcore: registered new interface driver usbserial_generic
+[ 8865.808649] usbserial: USB Serial support registered for generic
+[ 8865.812262] usbcore: registered new interface driver cp210x
+[ 8865.812395] usbserial: USB Serial support registered for cp210x
+[ 8865.812559] cp210x 1-1.4:1.0: cp210x converter detected
+[ 8865.813036] usb 1-1.4: cp210x converter now attached to ttyUSB0
+</code></pre></div></div>
+<p>We can now program the Arduino. Make sure that you have correctly connected the RX/TX and the reset pins, as well as the Vcc/Ground. You need the 100nF capacitor on the reset line, for it to work correctly.</p>
+
+<p>Please, also make sure that the Python python-serial package is installed, since it is used by Arduino.mk:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make upload
+</code></pre></div></div>
+<p>If sucessful, you should see something like:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/vpetkov/local/arduino-1.6.13/hardware/tools/avr/bin/avrdude -q -V -p atmega328p -C /home/vpetkov/local/arduino-1.6.13/hardware/tools/avr/etc/avrdude.conf -D -c arduino -b 57600 -P /dev/ttyUSB0 \
+		-U flash:w:build-pro-ATmega328/test.hex:i
+
+avrdude: AVR device initialized and ready to accept instructions
+avrdude: Device signature = 0x1e950f (probably m328p)
+avrdude: reading input file "build-pro-ATmega328/test.hex"
+avrdude: writing flash (1668 bytes):
+avrdude: 1668 bytes of flash written
+
+avrdude: safemode: Fuses OK (E:00, H:00, L:00)
+
+avrdude done.  Thank you.
+
+make[1]: Leaving directory '/home/vpetkov/test'
+</code></pre></div></div>
+
+<p>Now we can test the message that the Arduino sends to us. I like to use a python command to monitor the serial port:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python -m serial.tools.miniterm -p /dev/ttyUSB0 -b 9600
+</code></pre></div></div>
+
+<p>You should see period messages like:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Still there
+</code></pre></div></div>
+
+<p>Press Ctrl and ] to exit.</p>
+
+<h4 id="user-libraries">User Libraries</h4>
+
+<p>You might have noticed the line</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>USER_LIB_PATH=/home/$(shell whoami)/local/lib
+</code></pre></div></div>
+
+<p>This is where I put my user libraries. For instance, my temperature/humidity sensor uses the DHT library:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/adafruit/DHT-sensor-library ~/local/lib/DHT
+</code></pre></div></div>
+<p>Also, I use MySensors for the wireless network:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/mysensors/MySensors ~/local/mysensors
+</code></pre></div></div>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2018/05/31/moved-blog-to-github/">
+            Blog Migration
+            <small>31 May 2018</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/11/19/how-to-install-a-raspberry-camera-node-on-ros-kinetic-raspbian-stretch/">
+            How to install a Raspberry Camera Node on ROS Kinetic (Raspbian Stretch)
+            <small>19 Nov 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2017/11/19/how-to-install-ros-robot-operating-system-on-raspberry-pi-3-with-raspbian-stretch/">
+            How to Install ROS (Robot Operating System) On Raspberry Pi 3 with Raspbian Stretch
+            <small>19 Nov 2017</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+        
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+    </script>
+  </body>
+</html>
