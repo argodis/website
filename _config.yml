@@ -5,10 +5,10 @@ permalink:           pretty
 # relative_permalinks: true
 
 # Setup
-title:               Venelin Petkov
-tagline:             'Making things work since 1982'
-description:         'This is my personal blog, so you can expect random bits and pieces about various hobby projects if mine. Also visit Engineering Learning Machines or contact me via LinkedIn.'
-url:                 https://venelinpetkov.com
+title:               Argodis UG (haftungsbeschränkt)
+tagline:             'Technology Expertise'
+description:         'Official company website'
+url:                 https://argodis.de
 baseurl:             ''
 paginate:            5
 
